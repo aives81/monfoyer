@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Type_users extends Model
+class Produit extends Model
 {
     //
     /**
@@ -13,10 +13,10 @@ class Type_users extends Model
      * @var array
      */
 
-    protected $fillable = ['typeLib'];
+    protected $fillable = ['prodLib', 'prodPrice', 'imgId'];
 
-    public function users()
+    public function img_prod()
     {
-        return $this->hasMany('App\User');
+        return $this->belongsTo('App\Img_prod', 'imgId');
     }
 }

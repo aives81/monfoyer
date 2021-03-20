@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Type_users extends Model
+class Adresse extends Model
 {
     //
     /**
@@ -13,10 +13,10 @@ class Type_users extends Model
      * @var array
      */
 
-    protected $fillable = ['typeLib'];
+    protected $fillable = ['adrLib', 'adrLat','adrLong', 'id'];
 
     public function users()
     {
-        return $this->hasMany('App\User');
+        return $this->belongsTo('App\User', 'id');
     }
 }

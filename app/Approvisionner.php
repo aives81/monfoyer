@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Type_users extends Model
+class Approvisionner extends Model
 {
     //
     /**
@@ -13,10 +13,7 @@ class Type_users extends Model
      * @var array
      */
 
-    protected $fillable = ['typeLib'];
-
-    public function users()
-    {
-        return $this->hasMany('App\User');
-    }
+    protected $fillable = [
+        'oldQte', 'newQte', 'dateApp', 'entId', 'prodId'
+    ];
 }
