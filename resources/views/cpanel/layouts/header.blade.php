@@ -74,13 +74,20 @@
 						<span class="user-icon">
 							<img src="{{asset('assets/vendors/images/photo1.jpg')}}" alt="">
 						</span>
-                    <span class="user-name">Ross C. Lopez</span>
+                    <span class="user-name">{{ Auth::user()->pnom." ".Auth::user()->nom }}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                     <a class="dropdown-item" href="/profile"><i class="dw dw-user1"></i> Profile</a>
                     <a class="dropdown-item" href="/profile"><i class="dw dw-settings2"></i> Setting</a>
                     <a class="dropdown-item" href="/faq"><i class="dw dw-help"></i> Help</a>
-                    <a class="dropdown-item" href="/seconnecter"><i class="dw dw-logout"></i> Log Out</a>
+                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                       document.getElementById('logout-form').submit();">
+                        <i class="dw dw-logout"></i> Déconnexion
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
                 </div>
             </div>
         </div>

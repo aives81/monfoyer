@@ -57,5 +57,22 @@
         }
     });
 </script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $(document).on('click', '#addHFO', function () {
+            var html = '';
+            html += '<tr>';
+            html += '<td><input class="form-control time-picker-default" name="heureOuv[]" placeholder="time" type="text"></td>';
+            html += '<td><input class="form-control time-picker-default" name="heureFerm[]" placeholder="time" type="text"></td>';
+            html += '<td><button style="background: #dc3545;" type="button" name="remove" class="btn btn-danger btn-sm" id="rmHFO"><i class="fa fa-trash"></i></button></td></tr>';
+            $('#item_table').append(html);
+        });
+
+        $(document).on('click', '#rmHFO', function () {
+            $(this).closest('tr').remove();
+        });
+    });
+</script>
 </body>
 </html>

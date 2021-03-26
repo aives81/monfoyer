@@ -66,7 +66,7 @@
                                         OU
                                     </div>
                                     <div class="input-group mb-0">
-                                        <a class="btn btn-outline-primary btn-lg btn-block" href="{{ __('/Ouvrir-une-session') }}">Rejoignez-nous maintenant !</a>
+                                        <a class="btn btn-outline-primary btn-lg btn-block" href="{{ __('/Rejoignez-nous') }}">Rejoignez-nous maintenant !</a>
                                     </div>
                                 </div>
                             </div>

@@ -71,7 +71,12 @@
                             </li>-->
                             <li @if(request()->segment(1) == "A-propos-de-nous") class="active" @endif><a href="{{__('/A-propos-de-nous')}}"><span><i class="icon-info"></i> A-propos</span></a></li>
                             <li @if(request()->segment(1) == "Faqs") class="active" @endif><a href="{{__('/Faqs')}}"><span><i class="icon-question-circle"></i> FAQ</span></a></li>
+                            @if(Auth::check())
+
+                            <li><a href="{{__('/Mon-profil')}}"><span><i class="icon-lock_open"></i> Mon profil</span></a></li>
+                            @else
                             <li @if(request()->segment(1) == "Se-connecter") class="active" @endif><a href="{{__('/Se-connecter')}}"><span><i class="icon-user"></i> Connexion / Inscription</span></a></li>
+                            @endif
                             <li @if(request()->segment(1) == "Contactez-nous") class="active" @endif><a href="{{__('/Contactez-nous')}}"><span><i class="icon-markunread_mailbox"></i> Contact</span></a></li>
                         </ul>
                     </nav>

@@ -19,14 +19,15 @@ class CreateEntrepotsTable extends Migration
             $table->string('entImg')->nullable();
             $table->string('entLat');
             $table->string('entLong');
-            $table->string('entJourDispo');
-            $table->string('entHeureDispo');
+            $table->string('entJourDispo')->nullable();
+            $table->string('entHeureDispo')->nullable();
             $table->string('manualDispoActiv')->nullable()->comment('Si le proprio decide de changer manuellement la disponibilité de sont entrepot');
             $table->string('entDispoActiv')->nullable()->comment('Le systeme se charge de changer automatiquement la disponibilité d\'un entrepot');;
+            $table->unsignedInteger('validAdmin')->default(0);
             $table->string('entSlug');
             $table->string('entDescripPlace');
-            $table->string('entContact');
-            $table->string('entMdp');
+            $table->string('entContact')->nullable();
+            $table->string('entMdp')->nullable();
             $table->unsignedBigInteger('id');
             $table->foreign('id')
                 ->references('id')

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('cpanel.layouts.app')
 
 @section('body')
     <div class="main-container">
@@ -31,53 +31,44 @@
                             </div>
                         </div>
                     </div>
+                    @if(isset($msg))
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="alert alert-success">
+                                    <b>{{ $msg }}</b>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
-                <form action="">
+                <form action="{{ __('/enregistrerEntrepot') }}" method="post" enctype="multipart/form-data">
+                    @csrf
                     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Nom de l'entreprise :</label>
-                                    <input type="text" name="entLib" class="form-control">
+                                    <input type="text" required name="entLib" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Image descriptive :</label>
-                                    <input type="file" name="entImg" class="form-control">
+                                    <input type="file" name="entImg" required class="form-control">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Jour d'ouverture :</label>
-                                    <select class="custom-select2 form-control" multiple="multiple"
-                                            style="width: 100%;">
-                                            <option value="AK">Lundi</option>
-                                            <option value="HI">Mardi</option>
-                                            <option value="HI">Mercredi</option>
-                                            <option value="HI">Jeudi</option>
-                                            <option value="HI">Vendredi</option>
-                                            <option value="HI">Samedi</option>
-                                            <option value="HI">Dimanche</option>
-                                    </select>
+                                    <label>Latitude :</label>
+                                    <input type="text" name="entLat" required disabled id="lat" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Heure d'ouverture :</label>
-                                            <input type="text" name="entImg" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Heure de fermeture :</label>
-                                            <input type="text" name="entImg" class="form-control">
-                                        </div>
-                                    </div>
+                                <div class="form-group">
+                                    <label>Jour d'ouverture :</label>
+                                    <input type="text" name="entLong" required disabled id="long" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -86,52 +77,34 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Heure de fermeture :</label>
-                                <select class="custom-select2 form-control" name="state"
-                                        style="width: 100%; height: 38px;">
-                                    <optgroup label="Alaskan/Hawaiian Time Zone">
-                                        <option value="AK">Alaska</option>
-                                        <option value="HI">Hawaii</option>
-                                    </optgroup>
-                                    <optgroup label="Pacific Time Zone">
-                                        <option value="CA">California</option>
-                                        <option value="NV">Nevada</option>
-                                        <option value="OR">Oregon</option>
-                                        <option value="WA">Washington</option>
-                                    </optgroup>
-                                    <optgroup label="Mountain Time Zone">
-                                        <option value="AZ">Arizona</option>
-                                        <option value="CO">Colorado</option>
-                                        <option value="ID">Idaho</option>
-                                        <option value="MT">Montana</option>
-                                        <option value="NE">Nebraska</option>
-                                        <option value="NM">New Mexico</option>
-                                        <option value="ND">North Dakota</option>
-                                        <option value="UT">Utah</option>
-                                        <option value="WY">Wyoming</option>
-                                    </optgroup>
-                                </select>
+                                    <label>Commune :</label>
+                                    <select class="custom-select2 form-control" required name="comId"
+                                            style="width: 100%; height: 38px;">
+                                        <!--<optgroup label="Alaskan/Hawaiian Time Zone">-->
+                                        <option value="">Ou se trouve votre entrepot ?</option>
+                                        @foreach($communes as $commune)
+                                            <option value="{{ $commune->comId }}">{{ $commune->comLib }}</option>
+                                        @endforeach
+                                        <!--</optgroup>-->
+                                    </select>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Heure de fermeture :</label>
-                                    <textarea name="entDescrip" id="" cols="30" rows="10" class="form-control"></textarea>
+                                    <label>Description :</label>
+                                    <textarea placeholder="Décrivez un peu plus l'emplacement de votre entrepot"
+                                              name="entDescrip" id="descrip" cols="30" rows="10"
+                                              class="form-control"></textarea>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <img src="{{ asset('assets/src/images/map.png') }}" class="img-fluid" alt="">
                             </div>
                         </div>
                     </div>
                     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
                         <div class="row">
                             <div class="col-md-12 text-right">
-                                <button class="btn btn-primary">Enregistrer <i class="fa fa-save"></i></button>
+                                <button class="btn btn-primary" id="valider" type="submit">Enregistrer <i class="fa fa-save"></i></button>
                             </div>
                         </div>
                     </div>
@@ -143,4 +116,33 @@
             </div>
         </div>
     </div>
+
+    <script>
+        if ( navigator.geolocation )
+        {
+            navigator.geolocation.getCurrentPosition( function(position) {
+
+                var lng = position.coords.longitude;
+                var lat = position.coords.latitude;
+
+                //mapboxgl.accessToken = 'MAPBOX TOKEN';
+
+                /*var map = new mapboxgl.Map({
+                    container: 'map',
+                    style: 'mapbox://styles/mapbox/streets-v11',
+                    center: [ lng, lat ],
+                    zoom: 12
+                });*/
+
+                document.getElementById('lat').value = lat;
+                document.getElementById('long').value = lng;
+            });
+        }
+
+        document.getElementById('valider').addEventListener("click", function(){
+            document.getElementById('lat').removeAttribute("disabled");
+            document.getElementById('long').removeAttribute("disabled");
+        });
+
+    </script>
 @stop

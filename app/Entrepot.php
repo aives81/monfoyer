@@ -15,7 +15,7 @@ class Entrepot extends Model
 
     protected $fillable = [
         'entLib', 'entImg', 'entLat', 'entLong', 'entJourDispo', 'entHeureDispo',
-        'manualDispoActiv', 'entDispoActiv', 'entSlug', 'entDescripPlace', 'entAdminActiv', 'comId', 'id'
+        'manualDispoActiv', 'entDispoActiv', 'validAdmin', 'entSlug', 'entDescripPlace', 'entAdminActiv', 'comId', 'id'
     ];
 
     public function communes()

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('cpanel.layouts.app')
 
 @section('body')
     <div class="main-container">
@@ -18,32 +18,42 @@
                             </nav>
                         </div>
                         <div class="col-md-6 col-sm-12 text-right">
-                            <a class="btn btn-primary" href="#" role="button">
+                            <a class="btn btn-primary" href="{{ __('/Ajouter-entrepot') }}" role="button">
                                 Ajouter un entrepot <i class="fa fa-plus"></i>
                             </a>
                         </div>
                     </div>
+                    <br>
+                    @if(isset($msg))
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-success">
+                                <b>{{ $msg }}</b>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
                 </div>
                 <div class="row">
-                    @for($i = 0; $i<3; $i++)
+                    @foreach($allEntreprisesOfUser as $entreprise)
                         <div class="col-md-4">
                             <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <img src="{{ asset('assets/src/images/total.jpg') }}"
-                                             class="img-fluid img-thumbnail" alt="">
+                                        <img src="storage/{{ $entreprise->entImg }}"
+                                             class="img-fluid img-thumbnail" alt="{{ $entreprise->entSlug }}">
                                     </div>
                                 </div>
-                                <p><b>Mon entrepot de gaz</b></p>
+                                <p><b>{{ $entreprise->entLib }}</b></p>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <button class="btn btn-primary" style="width: 100%">Voir <i
-                                                class="fa fa-eye"></i></button>
+                                        <a class="btn btn-primary" style="width: 100%" href="{{ __('/Mon-Entrepot/'.$entreprise->entId) }}"> Voir <i
+                                                class="fa fa-eye"></i></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    @endfor
+                    @endforeach
                 </div>
 
             </div>

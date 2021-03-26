@@ -30,6 +30,8 @@
     <link rel="stylesheet" type="text/css" href="{{asset('assets/src/plugins/datatables/css/responsive.bootstrap4.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/styles/style.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/src/plugins/ion-rangeslider/css/ion.rangeSlider.css')}}">
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>

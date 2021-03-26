@@ -33,7 +33,7 @@ Route::get('/Se-connecter', function () {
     return view('cpanel.login');
 });
 
-Route::get('/Ouvrir-une-session/{id?}','userController@create');
+Route::get('/Rejoignez-nous/{id?}','userController@create');
 Route::post('/enregistrerUser','userController@store');
 
 Route::get('/Contactez-nous', function () {
@@ -42,7 +42,7 @@ Route::get('/Contactez-nous', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 
 /////////////////////////////////////////////////////////////
 /*Dashboard route*/
@@ -51,13 +51,13 @@ Route::get('/Mon-profil', function () {
     return view('cpanel.welcome');
 });
 
-Route::get('/Ajouter-entrepot', function () {
-    return view('addEntrepot');
-});
+Route::get('/Ajouter-entrepot', 'entrepotController@create');
 
-Route::get('/Mes-entrepots', function () {
-    return view('allEntrepots');
-});
+Route::post('/enregistrerEntrepot', 'entrepotController@store');
+
+Route::get('/Mes-entrepots', 'entrepotController@entrepriseUser');
+
+Route::get('/Mon-Entrepot/{entId}', 'entrepotController@oneEntreprise');
 
 Route::get('/Entrepot-detail', function () {
     return view('detailEntrepot');
@@ -125,7 +125,7 @@ Route::get('/ui-sweet-alert', function () {
     return view('ui-sweet-alert');
 });
 Route::get('/ui-notification', function () {
-    return view('ui-notification');
+    return view('cpanel.ui-notification');
 });
 Route::get('/ui-timeline', function () {
     return view('ui-timeline');
