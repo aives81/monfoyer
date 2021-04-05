@@ -258,7 +258,9 @@
     var typed = new Typed('.typed-words', {
         strings: [
             @foreach($marques as $marque)
+
             "{{ $marque->marqLib }}",
+
             @endforeach
         ],
         typeSpeed: 80,
