@@ -60,7 +60,7 @@
                                     <label class="btn">
                                         <input type="radio" value="femme" name="genre" id="femme">
                                         <div class="icon">
-                                                <img src="{{asset('assets/vendors/images/femme.svg')}}" class="svg"
+                                                <img src="{{asset('assets/vendors/images/femme.png')}}" class="svg"
                                                      alt="">
                                         </div>
                                         <span>Je suis</span>
@@ -129,7 +129,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="input-group mb-0">
-                                        <button class="btn btn-primary btn-lg btn-block" style="width: 100%">On y
+                                        <button class="btn btn-outline-primary btn-lg btn-block" style="width: 100%">On y
                                             va <i class="fa fa-send"></i></button>
                                     </div>
                                 </div>

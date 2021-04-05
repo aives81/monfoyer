@@ -14,6 +14,6 @@ class Posseder extends Model
      */
 
     protected $fillable = [
-        'qteStock', 'entId', 'prodId'
+        'qteStock', 'puRechargement', 'puAchat', 'entId', 'prodId'
     ];
 }

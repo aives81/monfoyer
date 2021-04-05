@@ -34,6 +34,14 @@
 
         gtag('config', 'UA-119386393-1');
     </script>
+
+    <style>
+        .btn-primary:hover{
+            color: #00918e;
+            background-color: #fff;
+            border-color: #00918e;
+        }
+    </style>
 </head>
 <body class="login-page">
 <div class="login-header box-shadow">

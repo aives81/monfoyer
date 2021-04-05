@@ -16,6 +16,8 @@ class CreatePossedersTable extends Migration
         Schema::create('posseders', function (Blueprint $table) {
             $table->id('posId');
             $table->string('qteStock');
+            $table->string('puRechargement');
+            $table->string('puAchat');
             $table->unsignedBigInteger('entId');
             $table->foreign('entId')
                 ->references('entId')

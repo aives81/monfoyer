@@ -52,20 +52,20 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item pt-20 pb-20">
                                 <h6 class="weight-400 d-flex">
-                                    <i class="icon-copy dw dw-checked mr-2" data-color="#1b00ff"></i> Install Node.js
+                                    <i class="icon-copy dw dw-checked mr-2" data-color="#00918e"></i> Install Node.js
                                     From <a href="https://nodejs.org/en/download/" class="ml-2" target="_blank"
-                                            data-color="#1b00ff">https://nodejs.org/en/download/</a>
+                                            data-color="#00918e">https://nodejs.org/en/download/</a>
                                 </h6>
                             </li>
                             <li class="list-group-item pt-20 pb-20">
                                 <h6 class="weight-400 d-flex">
-                                    <i class="icon-copy dw dw-checked mr-2" data-color="#1b00ff"></i> After that open
+                                    <i class="icon-copy dw dw-checked mr-2" data-color="#00918e"></i> After that open
                                     command promt or any other terminal and go to Package Path.
                                 </h6>
                             </li>
                             <li class="list-group-item pt-20 pb-20">
                                 <h6 class="weight-400 d-flex">
-                                    <i class="icon-copy dw dw-checked mr-2" data-color="#1b00ff"></i> Npm is a default
+                                    <i class="icon-copy dw dw-checked mr-2" data-color="#00918e"></i> Npm is a default
                                     package manager for the JavaScript runtime environment Node.js. If you've already
                                     then update once.
                                 </h6>
@@ -83,7 +83,7 @@
                             </li>
                             <li class="list-group-item pt-20 pb-20">
                                 <h6 class="weight-400 d-flex">
-                                    <i class="icon-copy dw dw-checked mr-2" data-color="#1b00ff"></i> Gulp is a
+                                    <i class="icon-copy dw dw-checked mr-2" data-color="#00918e"></i> Gulp is a
                                     cross-platform, streaming task runner that lets developers automate many development
                                     tasks. To install gulp globally has inclue:
                                 </h6>
@@ -109,7 +109,7 @@
                             </li>
                             <li class="list-group-item pt-20 pb-20">
                                 <h6 class="weight-400 d-flex">
-                                    <i class="icon-copy dw dw-checked mr-2" data-color="#1b00ff"></i> Below Command will
+                                    <i class="icon-copy dw dw-checked mr-2" data-color="#00918e"></i> Below Command will
                                     execute all the assets(js,css) to the dist folder separately.
                                 </h6>
                                 <div class="bg-dark py-2 px-3 ml-md-4 mt-md-3 text-white rounded-lg shadow">

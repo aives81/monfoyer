@@ -73,6 +73,32 @@
             $(this).closest('tr').remove();
         });
     });
+
+    $(document).ready(function () {
+
+        $(document).on('click', '#addH', function () {
+            var html = '';
+            html += '<tr>';
+            html += '<td><select name="jour[]" id="" class="form-control">' +
+                '<option value="Lundi">Lundi</option>' +
+                '<option value="Mardi">Mardi</option>' +
+                '<option value="Mercredi">Mercredi</option>' +
+                '<option value="Jeudi">Jeudi</option>' +
+                '<option value="Vendredii">Vendredii</option>' +
+                '<option value="Samedi">Samedi</option>' +
+                '<option value="Dimanche">Dimanche</option>' +
+                '</select></td>';
+            html += '<td><input type="time" required name="heureOuv[]" class="time-picker-default form-control"></td>';
+            html += '<td><input type="time" required name="heureFerm[]" class="form-control"></td>';
+            html += '<td><button style="background: #dc3545;" type="button" name="remove" class="btn btn-danger btn-sm" id="rmRowJH"><i class="fa fa-trash"></i></button></td></tr>';
+            $('#heurOuv').append(html);
+        });
+
+        $(document).on('click', '#rmRowJH', function () {
+            $(this).closest('tr').remove();
+        });
+    });
+
 </script>
 </body>
 </html>

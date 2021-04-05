@@ -51,7 +51,8 @@
                     <nav class="site-navigation position-relative text-right" role="navigation">
 
                         <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
-                            <li @if(request()->segment(1) == "") class="active" @endif><a href="{{__('/')}}"><span><i class="icon-home"></i> Accueil</span></a></li>
+                            <li @if(request()->segment(1) == "") class="active" @endif><a href="{{__('/')}}"><span><i
+                                            class="icon-home"></i> Accueil</span></a></li>
                             <!--<li class="has-children">
                                 <a href="about.html"><span>Dropdown</span></a>
                                 <ul class="dropdown arrow-top">
@@ -69,15 +70,24 @@
                                     </li>
                                 </ul>
                             </li>-->
-                            <li @if(request()->segment(1) == "A-propos-de-nous") class="active" @endif><a href="{{__('/A-propos-de-nous')}}"><span><i class="icon-info"></i> A-propos</span></a></li>
-                            <li @if(request()->segment(1) == "Faqs") class="active" @endif><a href="{{__('/Faqs')}}"><span><i class="icon-question-circle"></i> FAQ</span></a></li>
+                            <li @if(request()->segment(1) == "A-propos-de-nous") class="active" @endif><a
+                                    href="{{__('/A-propos-de-nous')}}"><span><i
+                                            class="icon-info"></i> A-propos</span></a></li>
+                            <li @if(request()->segment(1) == "Faqs") class="active" @endif><a
+                                    href="{{__('/Faqs')}}"><span><i class="icon-question-circle"></i> FAQ</span></a>
+                            </li>
                             @if(Auth::check())
 
-                            <li><a href="{{__('/Mon-profil')}}"><span><i class="icon-lock_open"></i> Mon profil</span></a></li>
+                                <li><a href="{{__('/Mon-profil')}}"><span><i
+                                                class="icon-lock_open"></i> Mon profil</span></a></li>
                             @else
-                            <li @if(request()->segment(1) == "Se-connecter") class="active" @endif><a href="{{__('/Se-connecter')}}"><span><i class="icon-user"></i> Connexion / Inscription</span></a></li>
+                                <li @if(request()->segment(1) == "Se-connecter") class="active" @endif><a
+                                        href="{{__('/Se-connecter')}}"><span><i class="icon-user"></i> Connexion / Inscription</span></a>
+                                </li>
                             @endif
-                            <li @if(request()->segment(1) == "Contactez-nous") class="active" @endif><a href="{{__('/Contactez-nous')}}"><span><i class="icon-markunread_mailbox"></i> Contact</span></a></li>
+                            <li @if(request()->segment(1) == "Contactez-nous") class="active" @endif><a
+                                    href="{{__('/Contactez-nous')}}"><span><i class="icon-markunread_mailbox"></i> Contact</span></a>
+                            </li>
                         </ul>
                     </nav>
                 </div>
@@ -166,8 +176,10 @@
                     <div class="col-md-6 mb-5 mb-lg-0 col-lg-3">
                         <h2 class="footer-heading mb-4">Notre application est disponible sur</h2>
                         <ul class="list-unstyled">
-                            <li><a href="#"><img src="{{ asset('images/google_play.png') }}" class="img-fluid" alt=""></a></li>
-                            <li><a href="#"><img src="{{ asset('images/app_store.png') }}" class="img-fluid" alt=""></a></li>
+                            <li><a href="#"><img src="{{ asset('images/google_play.png') }}" class="img-fluid"
+                                                 alt=""></a></li>
+                            <li><a href="#"><img src="{{ asset('images/app_store.png') }}" class="img-fluid" alt=""></a>
+                            </li>
                         </ul>
                     </div>
                     <div class="col-md-6 mb-5 mb-lg-0 col-lg-3">
@@ -218,7 +230,7 @@
                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     Copyright &copy;<script>document.write(new Date().getFullYear());</script>
                     All rights reserved | Mon Foyer, fait avec <i class="icon-heart text-danger"
-                                                                        aria-hidden="true"></i> by <a
+                                                                  aria-hidden="true"></i> by <a
                         href="#" target="_blank">monFoyer</a>
                 </p>
             </div>
@@ -244,7 +256,11 @@
 <script src="{{ asset('js/typed.js') }}"></script>
 <script>
     var typed = new Typed('.typed-words', {
-        strings: ["Attractions", " Events", " Hotels", " Restaurants"],
+        strings: [
+            @foreach($marques as $marque)
+            "{{ $marque->marqLib }}",
+            @endforeach
+        ],
         typeSpeed: 80,
         backSpeed: 80,
         backDelay: 4000,

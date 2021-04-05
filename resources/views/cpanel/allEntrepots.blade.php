@@ -25,35 +25,45 @@
                     </div>
                     <br>
                     @if(isset($msg))
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="alert alert-success">
-                                <b>{{ $msg }}</b>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="alert alert-success">
+                                    <b>{{ $msg }}</b>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     @endif
                 </div>
                 <div class="row">
-                    @foreach($allEntreprisesOfUser as $entreprise)
-                        <div class="col-md-4">
-                            <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <img src="storage/{{ $entreprise->entImg }}"
-                                             class="img-fluid img-thumbnail" alt="{{ $entreprise->entSlug }}">
+                    @if($allEntreprisesOfUser->isNotEmpty())
+                        @foreach($allEntreprisesOfUser as $entreprise)
+                            <div class="col-md-4">
+                                <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <img src="storage/{{ $entreprise->entImg }}"
+                                                 class="img-fluid img-thumbnail" alt="{{ $entreprise->entSlug }}">
+                                        </div>
                                     </div>
-                                </div>
-                                <p><b>{{ $entreprise->entLib }}</b></p>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <a class="btn btn-primary" style="width: 100%" href="{{ __('/Mon-Entrepot/'.$entreprise->entId) }}"> Voir <i
-                                                class="fa fa-eye"></i></a>
+                                    <p><b>{{ $entreprise->entLib }}</b></p>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <a class="btn btn-outline-primary" style="width: 100%"
+                                               href="{{ __('/Mon-Entrepot/'.$entreprise->entId) }}"> Voir <i
+                                                    class="fa fa-eye"></i></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        @endforeach
+                    @else
+                        <div class="footer-wrap pd-20 mb-20">
+                            <div class="alert alert-info">
+                                <i class="fa fa-info-circle" style="font-size: 20px"></i> <b>Tu n'as pas encore ajouté d'entrepots !</b>
+                                Fais le <a href="{{ __('/Ajouter-entrepot') }}">ICI</a>
+                            </div>
                         </div>
-                    @endforeach
+                    @endif
                 </div>
 
             </div>

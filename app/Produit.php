@@ -13,10 +13,10 @@ class Produit extends Model
      * @var array
      */
 
-    protected $fillable = ['prodLib', 'prodPrice', 'imgId'];
+    protected $fillable = ['prodLib', 'prodCat', 'prodImg', 'marqId'];
 
-    public function img_prod()
+    public function marque()
     {
-        return $this->belongsTo('App\Img_prod', 'imgId');
+        return $this->belongsTo('App\Marques', 'marqId');
     }
 }

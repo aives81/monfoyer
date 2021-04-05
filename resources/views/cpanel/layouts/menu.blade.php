@@ -11,6 +11,41 @@
     <div class="menu-block customscroll">
         <div class="sidebar-menu">
             <ul id="accordion-menu">
+                <li>
+                    <a href="{{ __('/Mon-profil') }}" class="dropdown-toggle no-arrow">
+                        <span class="micon dw dw-house-1"></span><span class="mtext">Accueil</span>
+                    </a>
+                </li>
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="micon dw dw-building"></span><span class="mtext">Entrepots</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="{{ __('/Ajouter-entrepot') }}">Ajouter un entrepot</a></li>
+                        <li><a href="{{ __('/Mes-entrepots') }}">Mes entrepots</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="{{ __('/Mes-commandes') }}" class="dropdown-toggle no-arrow">
+                        <span class="micon dw dw-list"></span><span class="mtext">Mes commandes</span>
+                    </a>
+                </li>
+
+                <li>
+                    <div class="dropdown-divider"></div>
+                </li>
+
+                <li>
+                    <a href="{{ __('') }}" class="dropdown-toggle no-arrow">
+                        <span class="micon dw dw-settings"></span><span class="mtext">Mes paramètres</span>
+                    </a>
+                </li>
+
+                <li>
+                    <div class="dropdown-divider"></div>
+                </li>
+
                 <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">
                         <span class="micon dw dw-house-1"></span><span class="mtext">Home</span>

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateImgProdsTable extends Migration
+class CreateMarquesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateImgProdsTable extends Migration
      */
     public function up()
     {
-        Schema::create('img_prods', function (Blueprint $table) {
-            $table->id('imgId');
-            $table->string('imgLib');
+        Schema::create('marques', function (Blueprint $table) {
+            $table->id('marqId');
+            $table->string('marqCode');
+            $table->string('marqLib');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateImgProdsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('img_prods');
+        Schema::dropIfExists('marques');
     }
 }

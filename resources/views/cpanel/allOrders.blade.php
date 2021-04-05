@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('cpanel.layouts.app')
 
 @section('body')
     <div class="main-container">

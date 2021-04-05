@@ -72,7 +72,11 @@
             <div class="dropdown">
                 <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
 						<span class="user-icon">
-							<img src="{{asset('assets/vendors/images/photo1.jpg')}}" alt="">
+                            @if(Auth::user()->genre == "homme")
+                                <img src="{{asset('assets/vendors/images/person.svg')}}" class="svg" alt="">
+                            @elseif(Auth::user()->genre == "femme")
+                                <img src="{{asset('assets/vendors/images/femme.png')}}" class="svg" alt="">
+                            @endif
 						</span>
                     <span class="user-name">{{ Auth::user()->pnom." ".Auth::user()->nom }}</span>
                 </a>

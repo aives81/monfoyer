@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $marques = \App\Marques::all();
+    return view('welcome')->with(['marques' => $marques]);
 });
 
 Route::get('/Nos-fournisseurs', function () {
@@ -47,9 +48,7 @@ Auth::routes();
 /////////////////////////////////////////////////////////////
 /*Dashboard route*/
 ////////////////////////////////////////////////////////////
-Route::get('/Mon-profil', function () {
-    return view('cpanel.welcome');
-});
+Route::get('/Mon-profil', 'profileController@index');
 
 Route::get('/Ajouter-entrepot', 'entrepotController@create');
 
@@ -57,24 +56,28 @@ Route::post('/enregistrerEntrepot', 'entrepotController@store');
 
 Route::get('/Mes-entrepots', 'entrepotController@entrepriseUser');
 
-Route::get('/Mon-Entrepot/{entId}', 'entrepotController@oneEntreprise');
+Route::get('/Mon-Entrepot/{entId}', 'entrepotController@show');
 
-Route::get('/Entrepot-detail', function () {
-    return view('detailEntrepot');
-});
+Route::post('/UpdateJourOuv', 'entrepotController@update');
+
+Route::post('/addProdForEnt', 'possederController@store');
+
+Route::post('/updateProdEnt', 'possederController@update');
+
+Route::delete('/deleteProdEnt/{prodId}', 'possederController@destroy')->name('prod.destroy');
 
 Route::get('/Mes-commandes', function () {
-    return view('allOrders');
+    return view('cpanel.allOrders');
 });
 
-Route::get('/Entrepot-detail', function () {
-    return view('detailEntrepot');
-});
+Route::get('/Admin/Ajouter-produits', 'adminController@getPageOfAddProd');
+
+Route::post('/addProdByAdmin', 'adminController@addProd');
 
 ///////////////////////////////////////////////
 
 Route::get('/form-basic', function () {
-    return view('form-basic');
+    return view('cpanel.form-basic');
 });
 Route::get('/advanced-components', function () {
     return view('cpanel.advanced-components');
@@ -95,7 +98,7 @@ Route::get('/image-dropzone', function () {
     return view('image-dropzone');
 });
 Route::get('/basic-table', function () {
-    return view('basic-table');
+    return view('cpanel.basic-table');
 });
 Route::get('/datatable', function () {
     return view('datatable');
@@ -107,13 +110,13 @@ Route::get('/ui-buttons', function () {
     return view('ui-buttons');
 });
 Route::get('/ui-cards', function () {
-    return view('ui-cards');
+    return view('cpanel.ui-cards');
 });
 Route::get('/ui-cards-hover', function () {
-    return view('ui-cards-hover');
+    return view('cpanel.ui-cards-hover');
 });
 Route::get('/ui-modals', function () {
-    return view('ui-modals');
+    return view('cpanel.ui-modals');
 });
 Route::get('/ui-tabs', function () {
     return view('ui-tabs');

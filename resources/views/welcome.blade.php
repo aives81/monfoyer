@@ -11,7 +11,7 @@
 
                     <div class="row justify-content-center mb-4">
                         <div class="col-md-10 text-center">
-                            <h1 data-aos="fade-up">Find Nearby <span class="typed-words"></span></h1>
+                            <h1 data-aos="fade-up">Trouvez prêt de vous <span class="typed-words"></span></h1>
                             <p data-aos="fade-up" class=" w-75 mx-auto">Lorem ipsum dolor sit amet, consectetur adipisicing
                                 elit. Porro provident corporis consequuntur et totam.</p>
                         </div>

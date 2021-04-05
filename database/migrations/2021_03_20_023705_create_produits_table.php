@@ -16,10 +16,11 @@ class CreateProduitsTable extends Migration
         Schema::create('produits', function (Blueprint $table) {
             $table->id('prodId');
             $table->string('prodLib');
-            $table->string('prodPrice');
-            $table->unsignedBigInteger('imgId');
-            $table->foreign('imgId')
-                ->references('imgId')->on('img_prods')
+            $table->string('prodCat');
+            $table->string('prodImg');
+            $table->unsignedBigInteger('marqId');
+            $table->foreign('marqId')
+                ->references('marqId')->on('marques')
                 ->onDelete('cascade');
             $table->timestamps();
         });
