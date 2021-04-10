@@ -189,7 +189,9 @@
                                 </div>
 
                                 <div class="tab-pane fade" id="jourOuv" role="tabpanel">
+                                    <?php $labelWorkingDayBtn = "Ajouter" ?>
                                     @if(!empty($jour[0]))
+                                            <?php $labelWorkingDayBtn = "Modifier" ?>
                                         <div class="pd-20">
                                             {{ $monEntrepot->entLib }} est ouvert:
                                             <ul>
@@ -202,6 +204,7 @@
                                             </ul>
                                         </div>
                                     @else
+                                        <br>
                                         <div class="alert alert-info">
                                             <i class="fa fa-info-circle"></i> <b>Vous n'avez pas encore défini d'heure
                                                 de travail pour votre entrepot !!</b>
@@ -210,11 +213,11 @@
 
                                     <div class="col-md-4 col-sm-12 mb-30">
                                         <a href="#" class="btn-block btn btn-primary" data-toggle="modal"
-                                           data-target="#Medium-modal" type="button">
-                                            Modifier <i class="fa fa-edit"></i>
+                                           data-target="#editWorkingDay" type="button">
+                                            <?=$labelWorkingDayBtn?> <i class="fa fa-edit"></i>
                                         </a>
 
-                                        <div class="modal fade" id="Medium-modal" tabindex="-1" role="dialog"
+                                        <div class="modal fade" id="editWorkingDay" tabindex="-1" role="dialog"
                                              aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered">
                                                 <div class="modal-content">

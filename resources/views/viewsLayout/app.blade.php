@@ -253,6 +253,7 @@
 <script src="{{ asset('js/rangeslider.min.js') }}"></script>
 
 
+@if(request()->segment(1) == '')
 <script src="{{ asset('js/typed.js') }}"></script>
 <script>
     var typed = new Typed('.typed-words', {
@@ -271,6 +272,7 @@
         showCursor: true
     });
 </script>
+@endif
 
 <script src="{{ asset('js/main.js') }}"></script>
 

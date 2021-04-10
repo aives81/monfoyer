@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use phpDocumentor\Reflection\Types\String_;
+use function PHPUnit\Framework\isEmpty;
 
 class entrepotController extends Controller
 {
@@ -88,45 +90,30 @@ class entrepotController extends Controller
      */
     public function show($entId)
     {
+        //Requete pour recuper les info d'un entrepot
         $monEntrepot = DB::table('entrepots')->where('entId', $entId)->first();
 
+        //Requete pour recuperer tous les produits de la base de données
         $allProds = DB::table('produits')
             ->selectRaw('produits.prodId, produits.prodLib, produits.prodCat, produits.prodImg, produits.marqId, marques.marqCode, marques.marqLib')
             ->join('marques', 'marques.marqId', '=', 'produits.marqId')
             ->orderBy('marques.marqLib', 'asc')
             ->get();
 
-        $prodsForEnt = DB::select("SELECT *
-        FROM entrepots e, posseders p, produits pr, marques m
-        WHERE e.entId = p.entId AND p.prodId = pr.prodId AND pr.marqId = m.marqId AND e.entId = $entId
-        
-        ");
+        //Requete pour recuperer les produits d'un entrepot
+        $prodsForEnt = $this->returnEntProd($entId);
 
+        //Requete pour recuperer les lignes d'approvisionnements en prduit d'un entrepot
         $approTable = DB::select("SELECT *
         FROM entrepots e, approvisionners a, produits pr, marques m
         WHERE e.entId = a.entId AND a.prodId = pr.prodId AND pr.marqId = m.marqId AND e.entId = $entId
         
         ");
 
-        $jour = explode('@', $monEntrepot->entJourDispo);
-        $intermHeure = explode('|', $monEntrepot->entHeureDispo);
-        $heure = [];
-        for ($i = 0; $i < count($intermHeure); $i++) {
-            $heure[] = explode("@", $intermHeure[$i]);
-        }
+        //traitement sur les jours et heures d'ouverture
+        $workingDayArray = $this->returnSortArrayOfWorkingDay($monEntrepot->entJourDispo, $monEntrepot->entHeureDispo);
 
-        for ($j=0; $j<count($jour); $j++)
-        {
-            $workingDayArray[] = [
-                'jour' => $jour[$j],
-                'heureDeb' => explode("@", $intermHeure[$j])[0],
-                'heureFin' => explode("@", $intermHeure[$j])[1]
-            ];
-        }
-
-        //Pour ranger les jours dans l'ordre
-        asort($workingDayArray);
-
+        //Retour des infos a la vue
         $dataArray = [
             'monEntrepot' => $monEntrepot,
             'jour' => $workingDayArray,
@@ -136,6 +123,94 @@ class entrepotController extends Controller
         ];
 
         return view('cpanel.detailEntrepot', $dataArray);
+    }
+
+    /**
+     * Methode pour retourner les produits d'un entrepot
+     * @param $entId
+     * @return array
+     */
+    private function returnEntProd($entId)
+    {
+        //Requete pour recuperer les produits d'un entrepot
+        $prodsForEnt = DB::select("SELECT *
+        FROM entrepots e, posseders p, produits pr, marques m
+        WHERE e.entId = p.entId AND p.prodId = pr.prodId AND pr.marqId = m.marqId AND e.entId = $entId
+        
+        ");
+
+        return $prodsForEnt;
+    }
+
+    /**
+     * Methode pour faciliter le traitmeent des jours et heures de travail
+     * @param $entJourDispo
+     * @param $entHeureDispo
+     * @return array
+     */
+    private function returnSortArrayOfWorkingDay($entJourDispo, $entHeureDispo)
+    {
+        $workingDayArray = [];
+
+        $jour = explode('@', $entJourDispo);
+        $intermHeure = explode('|', $entHeureDispo);
+        $heure = [];
+        for ($i = 0; $i < count($intermHeure); $i++) {
+            $heure[] = explode("@", $intermHeure[$i]);
+        }
+
+        //S'il y a bien des heures de taff definies par cet entrepot, on poursuit
+        if ($intermHeure[0] != "") {
+            for ($j = 0; $j < count($jour); $j++) {
+                $workingDayArray[] = [
+                    'jour' => $jour[$j],
+                    'heureDeb' => explode("@", $intermHeure[$j])[0],
+                    'heureFin' => explode("@", $intermHeure[$j])[1]
+                ];
+            }
+            //Pour ranger les jours dans l'ordre
+            asort($workingDayArray);
+        }
+
+        return $workingDayArray;
+    }
+
+
+    /**
+     * Methode pour faire la recherche de produit
+     */
+    public function showSearchResult()
+    {
+        $marque = request()->input('marque');
+        $categorie = request()->input('categorie');
+        $commune = request()->input('commune');
+
+        $sql = "SELECT * FROM entrepots e, marques m, produits pr, communes c, posseders p
+                WHERE e.entId = p.entId AND pr.prodId = p.prodId AND pr.marqId = m.marqId AND c.comId = e.comId AND p.qteStock>0";
+
+        (!empty($marque)) ? $sql .= " AND pr.marqId = " . $marque : '';
+        (!empty($categorie)) ? $sql .= " AND pr.prodCat = '" . $categorie . "'" : '';
+        (!empty($commune)) ? $sql .= " AND e.comId = " . $commune : '';
+
+        $sql .= ' GROUP BY e.entLib';
+
+        $searchResult = DB::select($sql);
+        return view('listings')->with(['searchResult' => $searchResult]);
+    }
+
+    public function showDetal(int $entId, string $slug)
+    {
+        $query = "SELECT * FROM entrepots e, marques m, produits pr, communes c, posseders p, users u
+                WHERE e.entId = p.entId AND pr.prodId = p.prodId AND pr.marqId = m.marqId AND c.comId = e.comId AND e.id = u.id AND e.entId = " . $entId . " AND e.entSlug = '" . $slug . "'";
+
+        $entInfo = DB::select($query);
+        $dataArray = [
+            'entInfo' => $entInfo,
+            'produits' => $this->returnEntProd($entId)
+        ];
+
+        //dd($entInfo);
+        return view('listing-single')->with($dataArray);
     }
 
     /**
@@ -160,20 +235,19 @@ class entrepotController extends Controller
             for ($i = 0; $i < count($request->jour); $i++) {
 
                 //On verifie que le jour choisi n'est pas déjà défini pour cet entrepot
-                if (!in_array($request->jour[$i], $arrayWorkingDayEnt))
-                {
+                if (!in_array($request->jour[$i], $arrayWorkingDayEnt)) {
                     if (isset($request->jour[$i]) && !empty($request->jour[$i])) {
 
                         $tabJourEnre[] = trim(htmlspecialchars($request->jour[$i]));
                     }
 
-                }else{
+                } else {
                     return back();
                 }
             }
 
             $workingDays = (!empty($entreprise->entJourDispo)) ?
-                $entreprise->entJourDispo . "@" .  implode("@", $tabJourEnre) :
+                $entreprise->entJourDispo . "@" . implode("@", $tabJourEnre) :
                 implode("@", $tabJourEnre);
 
             $tabHeurOuvFerm = [];

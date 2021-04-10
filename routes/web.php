@@ -12,31 +12,37 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+//Page d'accueil
+Route::get('/', 'interfaceController@index');
 
-Route::get('/', function () {
-    $marques = \App\Marques::all();
-    return view('welcome')->with(['marques' => $marques]);
-});
+//Page pour afficher les resultats de la recherche
+Route::get('/Nos-fournisseurs', 'entrepotController@showSearchResult');
 
-Route::get('/Nos-fournisseurs', function () {
-    return view('listings');
-});
+//Page pour afficher les détail d'une entreprise selectionnée par l'user
+Route::get('/Nos-fournisseurs/{entId}/{slug}', 'entrepotController@showDetal');
 
+//Page apropos de nous
 Route::get('/A-propos-de-nous', function () {
     return view('about');
 })
 
+//Page pour la foire aux questions
 ;Route::get('/Faqs', function () {
     return view('faq');
 });
 
+//Page pour l'inscription d'un user
+Route::get('/Rejoignez-nous/{id?}','userController@create')->where('id', '[0-9]+');;
+
+//Script pour l'insertion de l'user dans la base
+Route::post('/enregistrerUser','userController@store');
+
+//Page pour se connecter
 Route::get('/Se-connecter', function () {
     return view('cpanel.login');
 });
 
-Route::get('/Rejoignez-nous/{id?}','userController@create');
-Route::post('/enregistrerUser','userController@store');
-
+//Page de contact
 Route::get('/Contactez-nous', function () {
     return view('contact');
 });

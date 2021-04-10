@@ -11,41 +11,53 @@
 
                     <div class="row justify-content-center mb-4">
                         <div class="col-md-10 text-center">
-                            <h1 data-aos="fade-up">Trouvez prêt de vous <span class="typed-words"></span></h1>
-                            <p data-aos="fade-up" class=" w-75 mx-auto">Lorem ipsum dolor sit amet, consectetur adipisicing
+                            <h1 data-aos="fade-up">Prêt de vous <span class="typed-words"></span></h1>
+                            <p data-aos="fade-up" class=" w-75 mx-auto">Lorem ipsum dolor sit amet, consectetur
+                                adipisicing
                                 elit. Porro provident corporis consequuntur et totam.</p>
                         </div>
                     </div>
 
                     <div class="form-search-wrap p-2" data-aos="fade-up" data-aos-delay="200">
-                        <form method="post">
+                        <form action="{{ __('/Nos-fournisseurs') }}">
+                            @csrf
                             <div class="row align-items-center">
                                 <div class="col-lg-12 col-xl-4 no-sm-border border-right">
-                                    <input type="text" class="form-control" placeholder="Qu'est ce que tu recherches ?">
-                                </div>
-                                <div class="col-lg-12 col-xl-3 no-sm-border border-right">
-                                    <div class="wrap-icon">
-                                        <span class="icon icon-room"></span>
-                                        <input type="text" class="form-control" placeholder="Location">
+                                    <div class="select-wrap">
+                                        <span class="icon"><span class="icon-keyboard_arrow_down"></span></span>
+                                        <select class="form-control" required name="marque" id="">
+                                            <option value="">Tu recherches...</option>
+                                            @foreach($marques as $marque)
+                                                <option value="{{ $marque->marqId }}">{{ $marque->marqLib }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-
                                 </div>
                                 <div class="col-lg-12 col-xl-3">
                                     <div class="select-wrap">
                                         <span class="icon"><span class="icon-keyboard_arrow_down"></span></span>
-                                        <select class="form-control" name="" id="">
-                                            <option value="">All Categories</option>
-                                            <option value="">Hotels</option>
-                                            <option value="">Restaurant</option>
-                                            <option value="">Eat &amp; Drink</option>
-                                            <option value="">Events</option>
-                                            <option value="">Fitness</option>
-                                            <option value="">Others</option>
+                                        <select class="form-control" name="categorie" id="">
+                                            <option value="">Catégorie</option>
+                                            <option value="B6">B6</option>
+                                            <option value="B12">B12</option>
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-lg-12 col-xl-3">
+                                    <div class="select-wrap">
+                                        <span class="icon"><span class="icon icon-room"></span></span>
+                                        <select class="form-control" name="commune" id="">
+                                            <option value="">Quelle zone</option>
+                                            communes
+                                            @foreach($communes as $commune)
+                                                <option value="{{ $commune->comId }}">{{ $commune->comLib }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <div class="col-lg-12 col-xl-2 ml-auto text-right">
-                                    <input type="submit" class="btn text-white btn-primary" value="Search">
+                                    <input type="submit" class="btn text-white btn-primary" value="Chercher">
                                 </div>
 
                             </div>
@@ -76,11 +88,14 @@
                 </div>
                 <div class="col-md-8">
                     <p style="text-align: justify">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias blanditiis corporis cumque deleniti
-                        eius eos excepturi exercitationem in maxime modi nesciunt perferendis quasi quia, quidem reiciendis
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias blanditiis corporis cumque
+                        deleniti
+                        eius eos excepturi exercitationem in maxime modi nesciunt perferendis quasi quia, quidem
+                        reiciendis
                         sed unde ut veritatis.
                         <br>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, aspernatur autem dolorum eius et
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, aspernatur autem dolorum eius
+                        et
                         ex exercitationem explicabo fugiat fugit in ipsa iure obcaecati officia quaerat quam quibusdam,
                         repellendus sunt voluptate!
                         <br>
@@ -88,8 +103,10 @@
                         illum iusto minus nostrum porro qui quis sint ut veritatis vitae voluptatibus voluptatum. Autem
                         debitis eligendi natus!
                         <br>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet commodi deleniti dolorum eum fugit
-                        nisi nulla obcaecati odio perspiciatis porro quia quisquam repellendus, tempore! Ea laboriosam nemo
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet commodi deleniti dolorum eum
+                        fugit
+                        nisi nulla obcaecati odio perspiciatis porro quia quisquam repellendus, tempore! Ea laboriosam
+                        nemo
                         perferendis sint vero.
                     </p>
                 </div>
@@ -102,7 +119,8 @@
             <div class="row justify-content-center mb-5">
                 <div class="col-md-7 text-center border-primary">
                     <h2 class="font-weight-light text-primary">Comment ça marche ?</h2>
-                    <p class="color-black-opacity-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, asperiores
+                    <p class="color-black-opacity-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A,
+                        asperiores
                         autem beatae deserunt dicta enim ex, fugit harum in non.</p>
                 </div>
             </div>
@@ -111,36 +129,45 @@
                 <div class="col-md-6 mb-4 mb-lg-0 col-lg-4">
                     <div class="how-it-work-step">
                         <div class="img-wrap">
-                            <img src="images/step-1.svg" alt="Free website template by Free-Template.co" class="img-fluid">
+                            <img src="images/step-1.svg" alt="Free website template by Free-Template.co"
+                                 class="img-fluid">
                         </div>
                         <span class="number">1</span>
                         <h3>Lorem ipsum dolor sit amet</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aperiam aut consectetur eaque eos
-                            est eum excepturi ipsa ipsam iusto nesciunt officiis, pariatur quis repellat rerum ullam vitae?
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aperiam aut consectetur eaque
+                            eos
+                            est eum excepturi ipsa ipsam iusto nesciunt officiis, pariatur quis repellat rerum ullam
+                            vitae?
                             Dignissimos, facilis.</p>
                     </div>
                 </div>
                 <div class="col-md-6 mb-4 mb-lg-0 col-lg-4">
                     <div class="how-it-work-step">
                         <div class="img-wrap">
-                            <img src="images/step-2.svg" alt="Free website template by Free-Template.co" class="img-fluid">
+                            <img src="images/step-2.svg" alt="Free website template by Free-Template.co"
+                                 class="img-fluid">
                         </div>
                         <span class="number">2</span>
                         <h3>Lorem ipsum dolor sit amet</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aperiam aut consectetur eaque eos
-                            est eum excepturi ipsa ipsam iusto nesciunt officiis, pariatur quis repellat rerum ullam vitae?
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aperiam aut consectetur eaque
+                            eos
+                            est eum excepturi ipsa ipsam iusto nesciunt officiis, pariatur quis repellat rerum ullam
+                            vitae?
                             Dignissimos, facilis.</p>
                     </div>
                 </div>
                 <div class="col-md-6 mb-4 mb-lg-0 col-lg-4">
                     <div class="how-it-work-step">
                         <div class="img-wrap">
-                            <img src="images/step-3.svg" alt="Free website template by Free-Template.co" class="img-fluid">
+                            <img src="images/step-3.svg" alt="Free website template by Free-Template.co"
+                                 class="img-fluid">
                         </div>
                         <span class="number">3</span>
                         <h3>Lorem ipsum dolor sit amet</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aperiam aut consectetur eaque eos
-                            est eum excepturi ipsa ipsam iusto nesciunt officiis, pariatur quis repellat rerum ullam vitae?
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aperiam aut consectetur eaque
+                            eos
+                            est eum excepturi ipsa ipsam iusto nesciunt officiis, pariatur quis repellat rerum ullam
+                            vitae?
                             Dignissimos, facilis.</p>
                     </div>
                 </div>
@@ -333,7 +360,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 mb-5">
-                    <img src="images/img_1.jpg" alt="Free Website Template by Free-Template.co" class="img-fluid rounded">
+                    <img src="images/img_1.jpg" alt="Free Website Template by Free-Template.co"
+                         class="img-fluid rounded">
                 </div>
                 <div class="col-md-5 ml-auto">
                     <h2 class="text-primary mb-3">Pourquoi nous choisir ?</h2>
@@ -348,20 +376,24 @@
                                     <div class="pt-2">
                                         <p class="mb-0">Far far away, behind the word mountains, far from the countries
                                             Vokalia and Consonantia, there live the blind texts. Separated they live in
-                                            Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+                                            Bookmarksgrove right at the coast of the Semantics, a large language
+                                            ocean.</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="border p-3 rounded mb-2">
                                 <a data-toggle="collapse" href="#collapse-4" role="button" aria-expanded="false"
-                                   aria-controls="collapse-4" class="accordion-item h5 d-block mb-0">Is this available in my
+                                   aria-controls="collapse-4" class="accordion-item h5 d-block mb-0">Is this available
+                                    in my
                                     country?</a>
 
                                 <div class="collapse" id="collapse-4">
                                     <div class="pt-2">
-                                        <p class="mb-0">A small river named Duden flows by their place and supplies it with
-                                            the necessary regelialia. It is a paradisematic country, in which roasted parts
+                                        <p class="mb-0">A small river named Duden flows by their place and supplies it
+                                            with
+                                            the necessary regelialia. It is a paradisematic country, in which roasted
+                                            parts
                                             of sentences fly into your mouth.</p>
                                     </div>
                                 </div>
@@ -373,9 +405,12 @@
 
                                 <div class="collapse" id="collapse-2">
                                     <div class="pt-2">
-                                        <p class="mb-0">Even the all-powerful Pointing has no control about the blind texts
-                                            it is an almost unorthographic life One day however a small line of blind text
-                                            by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
+                                        <p class="mb-0">Even the all-powerful Pointing has no control about the blind
+                                            texts
+                                            it is an almost unorthographic life One day however a small line of blind
+                                            text
+                                            by the name of Lorem Ipsum decided to leave for the far World of
+                                            Grammar.</p>
                                     </div>
                                 </div>
                             </div>
@@ -387,9 +422,12 @@
 
                                 <div class="collapse" id="collapse-3">
                                     <div class="pt-2">
-                                        <p class="mb-0">The Big Oxmox advised her not to do so, because there were thousands
-                                            of bad Commas, wild Question Marks and devious Semikoli, but the Little Blind
-                                            Text didn’t listen. She packed her seven versalia, put her initial into the belt
+                                        <p class="mb-0">The Big Oxmox advised her not to do so, because there were
+                                            thousands
+                                            of bad Commas, wild Question Marks and devious Semikoli, but the Little
+                                            Blind
+                                            Text didn’t listen. She packed her seven versalia, put her initial into the
+                                            belt
                                             and made herself on the way.</p>
                                     </div>
                                 </div>
