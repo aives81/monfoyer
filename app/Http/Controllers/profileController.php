@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use function GuzzleHttp\Promise\all;
 
 class profileController extends Controller
 {
@@ -18,6 +21,7 @@ class profileController extends Controller
 
     public function index()
     {
-        return view('cpanel.welcome');
+        $dataArray = commanderController::getOrderFromuser();
+        return view('cpanel.welcome')->with($dataArray);
     }
 }

@@ -13,5 +13,5 @@ class Commander extends Model
      * @var array
      */
 
-    protected $fillable = ['cmdQte', 'cmdDate', 'id', 'entId', 'prodId'];
+    protected $fillable = ['cmdQte', 'cmdDate', 'id', 'entId', 'prodId', 'cmdDateLivraison',  'cmdType', 'cmdLivraison', 'cmdState'];
 }

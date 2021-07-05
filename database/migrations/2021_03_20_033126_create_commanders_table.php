@@ -17,6 +17,10 @@ class CreateCommandersTable extends Migration
             $table->id('cmdId');
             $table->string('cmdQte');
             $table->string('cmdDate');
+            $table->string('cmdDateLivraison')->nullable();
+            $table->string('cmdType')->comment('Rechargemnt ou nouvel achat');
+            $table->string('cmdLivraison')->comment('Oui Si l\'user veut se faire livrer sinon Non');
+            $table->unsignedInteger('cmdState')->default(0)->comment('0: en attente, 1: validé, 2: annulé');
             $table->unsignedBigInteger('id');
             $table->foreign('id')
                 ->references('id')->on('users')

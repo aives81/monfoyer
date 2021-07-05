@@ -16,6 +16,7 @@
                         <span class="micon dw dw-house-1"></span><span class="mtext">Accueil</span>
                     </a>
                 </li>
+                @if(Auth::user()->typeId == 1)
                 <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">
                         <span class="micon dw dw-building"></span><span class="mtext">Entrepots</span>
@@ -31,6 +32,7 @@
                         <span class="micon dw dw-list"></span><span class="mtext">Mes commandes</span>
                     </a>
                 </li>
+                @endif
 
                 <li>
                     <div class="dropdown-divider"></div>

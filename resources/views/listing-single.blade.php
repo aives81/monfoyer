@@ -36,23 +36,117 @@
                     <div class="mb-5 border-bottom pb-5">
                         <p><img src="{{ asset(__('storage/') . $entInfo[0]->entImg) }}" alt="{{ $entInfo[0]->entLib }}"
                                 style="height: 400px; width: 100%" class="img-fluid mb-4"></p>
-                        <!--<p><img src="{{ asset('images/mapbox.png') }}" alt="Image" class="img-fluid mb-4"></p>-->
+                    <!--<p><img src="{{ asset('images/mapbox.png') }}" alt="Image" class="img-fluid mb-4"></p>-->
 
                         <p>
                         <div class="row">
                             @foreach($produits as $produit)
                                 <div class="col-md-6">
-                                    <a href="#" class="popular-category h-100">
-                                            <span class="icon mb-3">
-                                                <img src="{{ asset(__('storage/') . $produit->prodImg) }}"
-                                                     alt="{{ $produit->marqLib }}" class="img-fluid mb-4">
-                                            </span>
+                                    <button type="button" style="border: none; outline: none; cursor: pointer"
+                                            class="popular-category h-100"
+                                            data-toggle="modal" data-target="#orderModal{{ $produit->prodId }}">
+                                                <span class="icon mb-3">
+                                                    <img src="{{ asset(__('storage/') . $produit->prodImg) }}"
+                                                         alt="{{ $produit->marqLib }}" class="img-fluid mb-4">
+                                                </span>
                                         <span class="caption mb-2 d-block">{{ $produit->marqLib }} ({{ $produit->prodCat }})</span>
                                         Rechargement: <span class="number">{{ number_format($produit->puRechargement, 0, ',', '.') }} frcfa</span>
                                         <br>
                                         <br>
                                         Nouvelle bouteille: <span class="number">{{ number_format($produit->puAchat, 0, ',', '.') }} frcfa</span>
-                                    </a>
+                                    </button>
+                                </div>
+                                <!-- Modal -->
+                                <div class="modal fade" id="orderModal{{ $produit->prodId }}" tabindex="-1"
+                                     role="dialog"
+                                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <form action="{{ __('/oderProd') }}" method="post">
+                                                @csrf
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title"
+                                                        id="exampleModalLongTitle">{{ $produit->marqLib }}
+                                                        ({{ $produit->prodCat }})</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    @if(!Auth::check())
+                                                        <div class="alert alert-info">
+                                                            Connectes-toi avant de passer une commande. <a href="{{ __('/Se-connecter') }}">Me
+                                                                connecter</a>
+                                                        </div>
+                                                    @endif
+                                                    <label for="">Type de commande:</label>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="cmdType"
+                                                               id="inlineRadio1" required value="rechargement">
+                                                        <label class="form-check-label"
+                                                               for="inlineRadio1">Rechargement</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="cmdType"
+                                                               id="inlineRadio2" required value="new">
+                                                        <label class="form-check-label" for="inlineRadio2">Nouvelle
+                                                            bouteille</label>
+                                                    </div>
+                                                    <label for="">Livraison:</label>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" required type="radio"
+                                                               name="livraison"
+                                                               id="livraisonOui{{ $produit->prodId }}" value="oui"
+                                                               onclick="livraisonFunction('deliveryDay{{ $produit->prodId }}', 'livraisonOui{{ $produit->prodId }}')">
+                                                        <label class="form-check-label" for="inlineRadio2">Oui</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" required type="radio"
+                                                               name="livraison"
+                                                               id="livraisonNon"
+                                                               onclick="livraisonFunction('deliveryDay{{ $produit->prodId }}', 'livraisonNon{{ $produit->prodId }}')"
+                                                               value="non">
+                                                        <label class="form-check-label" for="inlineRadio1">Non</label>
+                                                    </div>
+
+                                                    <div id="deliveryDay{{ $produit->prodId }}" style="display: none">
+                                                        <label for="">Date de livraison:</label>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="date"
+                                                                   name="dateLivraison"
+                                                                   id="dateLivraison{{ $produit->prodId }}">
+                                                        </div>
+                                                        <br>
+                                                    </div>
+
+                                                    <br>
+                                                    <label for="">Quantité:</label>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input form-control" type="number"
+                                                               name="cmdQte" required>
+                                                    </div>
+                                                    @if(Auth::check())
+                                                        <input class="form-check-input form-control" type="hidden"
+                                                               name="userId" value="{{ Auth::user()->id }}">
+                                                    @endif
+                                                    <input class="form-check-input form-control" type="hidden"
+                                                           name="entId" value="{{ $produit->entId }}">
+                                                    <input class="form-check-input form-control" type="hidden"
+                                                           name="prodId" value="{{ $produit->prodId }}">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">
+                                                        Annuler
+                                                    </button>
+                                                    <button type="submit" @if(!Auth::check()) disabled
+                                                            @endif class="btn btn-primary">Commander <i
+                                                            class="dw dw-shopping-cart"></i></button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
@@ -231,7 +325,8 @@
                                style="font-size: 30px; color: #00918e"></i> {{ $entInfo[0]->comLib . ", " . $entInfo[0]->entDescripPlace }}
                             <br>
                             <br>
-                            <img src="{{ asset('images/mapbox.png') }}" alt="Image" class="img-fluid" style="height: 300px">
+                            <img src="{{ asset('images/mapbox.png') }}" alt="Image" class="img-fluid"
+                                 style="height: 300px">
                         </div>
                     </div>
 
@@ -277,4 +372,18 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+        function livraisonFunction(globalField, idField) {
+            deliveryDay = document.getElementById(globalField);
+            deliveryDayField = document.getElementById(idField);
+
+            if (deliveryDayField.checked == true) {
+
+                alert(globalField + " " + idField);
+                deliveryDay.style.display = 'inline-block';
+            }
+        }
+    </script>
+
 @stop

@@ -83,7 +83,7 @@
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                     <a class="dropdown-item" href="/profile"><i class="dw dw-user1"></i> Profile</a>
                     <a class="dropdown-item" href="/profile"><i class="dw dw-settings2"></i> Setting</a>
-                    <a class="dropdown-item" href="/faq"><i class="dw dw-help"></i> Help</a>
+                    <a class="dropdown-item" href="{{ __('/') }}"><i class="dw dw-curve-arrow-2"></i> Retour sur le site</a>
                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                        document.getElementById('logout-form').submit();">
                         <i class="dw dw-logout"></i> Déconnexion

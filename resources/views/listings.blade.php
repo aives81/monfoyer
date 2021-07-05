@@ -35,12 +35,16 @@
             <div class="row">
                 <div class="col-lg-8">
                     <p><img src="images/mapBox.png" alt="Image" class="img-fluid mb-4"></p>
-                    @foreach($searchResult as $result)
+                    @foreach($searchResult as $key => $result)
                         <div class="d-block d-md-flex listing-horizontal">
 
                             <a href="{{ __('/Nos-fournisseurs/') . $result->entId . "/" . $result->entSlug }}" class="img d-block"
                                style="background-image: url('storage/{{ $result->entImg }}')">
-                                <span class="category">O U V E R T</span>
+                                @if($dispo[$key] == "ouvert")
+                                    <span class="category">O U V E R T</span>
+                                    @elseif($dispo[$key] == "ferme")
+                                    <span class="category bg-danger">F E R M E</span>
+                                @endif
                             </a>
 
                             <div class="lh-content">

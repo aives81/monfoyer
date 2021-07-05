@@ -195,8 +195,72 @@ class entrepotController extends Controller
         $sql .= ' GROUP BY e.entLib';
 
         $searchResult = DB::select($sql);
-        return view('listings')->with(['searchResult' => $searchResult]);
+        $arrayEntDispo = [];
+        foreach ($searchResult as $key => $result)
+        {
+            $entIsOpen = $this->checkIfEntIsOpen($result->entJourDispo, $result->entHeureDispo);
+            $arrayEntDispo[$key] = $entIsOpen;
+        }
+
+        return view('listings')->with(['searchResult' => $searchResult, 'dispo' => $arrayEntDispo]);
     }
+
+    private function checkIfEntIsOpen($day, $hour)
+    {
+            $workingDay = explode('@',$day);
+            $workingHour = explode('|',$hour);
+            $today = $this->returnDayInFrench();
+
+            if ($workingDay[0] != "")
+            {
+                $indiceDay = "";
+                for ($i = 0; $i<count($workingDay); $i++)
+                {
+                    if ($today == $workingDay[$i])
+                    {
+                        $indiceDay = $i;
+                    }
+                }
+
+                if (in_array($today, $workingDay))
+                {
+                    //Calculer le timeStamp de l'heure d'ouverture, de fermeture et actuelle
+                    $actualTime = time();
+                    $actualWorkingHour = explode("@", $workingHour[$indiceDay]);
+
+                    $beginingTime = gmmktime((int)substr($actualWorkingHour[0], 0, 2), (int)substr($actualWorkingHour[0], 3, 2));
+                    $endingTime = gmmktime((int)substr($actualWorkingHour[1], 0, 2), (int)substr($actualWorkingHour[0], 3, 2));
+
+                    //dd(($actualTime, $beginingTime, <= $beginingTime));
+
+                    if (($actualTime >= $beginingTime) && ($actualTime <= $endingTime))
+                    {
+                        return "ouvert";
+                    }else
+                    {
+                        return "ferme";
+                    }
+                }
+
+            }else {
+                return "Aucun jour de travail défini";
+            }
+    }
+
+
+    /**
+     * Methode pour retourner le jour de la semaine en francais
+     * @return mixed
+     */
+    public function returnDayInFrench()
+    {
+        $mois = array("Janvier", "Fevrier", "Mars", "Avril","Mai", "Juin", "Juillet", "Août","Septembre", "Octobre", "Novembre", "Decembre");
+        $jours= array("Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi");
+
+        //return $jours[date("w")]." ".date("j").(date("j")==1 ? "er":" ") . $mois[date("n")-1]." ".date("Y");
+        return $jours[date("w")];
+    }
+
 
     public function showDetal(int $entId, string $slug)
     {

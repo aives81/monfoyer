@@ -21,6 +21,9 @@ Route::get('/Nos-fournisseurs', 'entrepotController@showSearchResult');
 //Page pour afficher les détail d'une entreprise selectionnée par l'user
 Route::get('/Nos-fournisseurs/{entId}/{slug}', 'entrepotController@showDetal');
 
+//Script pour la commande d'un produit
+Route::post('/oderProd', 'commanderController@store');
+
 //Page apropos de nous
 Route::get('/A-propos-de-nous', function () {
     return view('about');
@@ -72,9 +75,9 @@ Route::post('/updateProdEnt', 'possederController@update');
 
 Route::delete('/deleteProdEnt/{prodId}', 'possederController@destroy')->name('prod.destroy');
 
-Route::get('/Mes-commandes', function () {
-    return view('cpanel.allOrders');
-});
+Route::get('/Mes-commandes', 'commanderController@showAllOrderOfEnts');
+
+Route::get('/Approuver-commandes/{comId}/{action}/{entId}/{qte}-{prodId}', 'commanderController@apprCmd');
 
 Route::get('/Admin/Ajouter-produits', 'adminController@getPageOfAddProd');
 

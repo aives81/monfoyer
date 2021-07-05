@@ -8,7 +8,7 @@
                     Consonantia, there live the blind texts.</p>-->
             </div>
             <div class="col-lg-4">
-                <p class="mb-0"><a href="signup.html"
+                <p class="mb-0"><a href="{{ __('/Rejoignez-nous') }}"
                                    class="btn btn-outline-white text-white btn-md px-5 font-weight-bold btn-md-block">Allez,
                         cliques ici &nbsp;&nbsp; <i class="icon-arrow-right"></i></a></p>
             </div>

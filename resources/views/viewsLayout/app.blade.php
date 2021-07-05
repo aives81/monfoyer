@@ -23,7 +23,6 @@
     <link rel="stylesheet" href="{{ asset('css/rangeslider.css') }}">
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-
 </head>
 <body>
 

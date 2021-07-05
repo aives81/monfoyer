@@ -32,378 +32,191 @@
                         </div>
                     </div>
                 </div>
-                <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
-                    <div class="pd-20">
-                        <h4 class="text-blue h4">Data Table Simple</h4>
-                        <p class="mb-0">you can find more options <a class="text-primary" href="https://datatables.net/"
-                                                                     target="_blank">Click Here</a></p>
-                    </div>
-                    <div class="pb-20">
-                        <table class="data-table table stripe hover nowrap">
-                            <thead>
+                <div class="card-box mb-30">
+                    <h2 class="h4 pd-20">Mes commandes</h2>
+                    <table class="data-table table nowrap">
+                        <thead>
+                        <tr>
+                            <th class="">#</th>
+                            <th>Entrepot</th>
+                            <th colspan="2" style="text-align: center">Désignation</th>
+                            <th>Type commande</th>
+                            <th>Qte</th>
+                            <th>Prix</th>
+                            <th>Date Commande</th>
+                            <th>Etat commande</th>
+                            <th class="datatable-nosort">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($wharehouseOrders as $key => $order)
                             <tr>
-                                <th class="table-plus datatable-nosort">Name</th>
-                                <th>Age</th>
-                                <th>Office</th>
-                                <th>Address</th>
-                                <th>Start Date</th>
-                                <th class="datatable-nosort">Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td class="table-plus">Gloria F. Mead</td>
-                                <td>25</td>
-                                <td>Sagittarius</td>
-                                <td>2829 Trainer Avenue Peoria, IL 61602</td>
-                                <td>29-03-2018</td>
+                                <td>{{ $key + 1 }}</td>
                                 <td>
-                                    <div class="dropdown">
-                                        <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                           href="#" role="button" data-toggle="dropdown">
-                                            <i class="dw dw-more"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                            <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-                                            <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-                                            <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-                                        </div>
-                                    </div>
+                                    <h5 class="font-16">{{ $order->entLib }}</h5>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td class="table-plus">Andrea J. Cagle</td>
-                                <td>30</td>
-                                <td>Gemini</td>
-                                <td>1280 Prospect Valley Road Long Beach, CA 90802</td>
-                                <td>29-03-2018</td>
+                                <td class="table-plus">
+                                    <img src="{{ 'storage/'. $order->prodImg }}" width="70" height="70"
+                                         class="img-fluid" alt="">
+                                </td>
                                 <td>
+                                    <h5 class="font-16"><?php $libProd = $order->marqLib . "(" . $order->prodCat . ")" ?></h5>
+                                </td>
+                                <td>{{ ucfirst($order->cmdType) }}</td>
+                                <td>{{ $order->cmdQte }}</td>
+                                <td>
+                                    <?php
+                                    if ($order->cmdType == "rechargement") {
+                                        $prix = number_format((int)$order->puRechargement * $order->cmdQte, 0, ',', '.') . ' FRCFA';
+                                    } else {
+                                        $prix = number_format((int)$order->puAchat * $order->cmdQte, 0, ',', '.') . ' FRCFA';
+                                    }
+                                    echo $prix;
+                                    ?>
+
+                                </td>
+                                <td>{{ $order->cmdDate }}</td>
+                                <td>
+                                    @if($order->cmdState == 0)
+                                        <div class="alert alert-info">
+                                            EN ATTENTE
+                                        </div>
+                                    @elseif($order->cmdState == 1)
+                                        <div class="alert alert-success">
+                                            VALIDEE
+                                        </div>
+                                    @else
+                                        <div class="alert alert-danger">
+                                            ANNULEE
+                                        </div>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($order->cmdState == 0)
                                     <div class="dropdown">
                                         <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                           href="#" role="button" data-toggle="dropdown">
+                                           href="#"
+                                           role="button" data-toggle="dropdown">
                                             <i class="dw dw-more"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                            <a href="#" class="btn-block dropdown-item" data-toggle="modal" data-target="#Medium-modal" type="button">
+                                            <a href="#" class="btn-block"
+                                               onclick="viewOrderModal({{ $order->prodId . ',' . $order->entId . ',' . $order->cmdId . ',\'' . $order->entLib . '\',\'' . $order->prodImg . '\',\'' . $libProd . '\',\'' . $order->cmdType . '\',' . $order->cmdQte . ',\'' . $prix . '\',' . $order->cmdState }})"
+                                               id="btnView{{ $order->cmdId }}" data-toggle="modal"
+                                               data-target=".Medium-modal" type="button">
                                                 <i class="dw dw-eye"></i> Voir
                                             </a>
-                                            <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-                                            <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
+                                            <!--<a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Modifier</a>
+                                            <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>-->
                                         </div>
                                     </div>
-                                </td>
-                            </tr>
-                            <!--Modal-->
-                            <div class="modal fade" id="Medium-modal" tabindex="-1" role="dialog"
-                                 aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title" id="myLargeModalLabel">Détail sur la commande</h4>
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                                ×
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="invoice-wrap">
-                                                <div class="invoice-box">
-                                                    <div class="invoice-header">
-                                                        <div class="logo text-center">
-                                                            <img src="vendors/images/deskapp-logo.png" alt="">
-                                                        </div>
-                                                    </div>
-                                                    <h4 class="text-center mb-30 weight-600">INVOICE</h4>
-                                                    <div class="row pb-30">
-                                                        <div class="col-md-6">
-                                                            <h5 class="mb-15">Client Name</h5>
-                                                            <p class="font-14 mb-5">Date Issued: <strong class="weight-600">10 Jan 2018</strong></p>
-                                                            <p class="font-14 mb-5">Invoice No: <strong class="weight-600">4556</strong></p>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="text-right">
-                                                                <p class="font-14 mb-5">Your Name</p>
-                                                                <p class="font-14 mb-5">Your Address</p>
-                                                                <p class="font-14 mb-5">City</p>
-                                                                <p class="font-14 mb-5">Postcode</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="invoice-desc pb-30">
-                                                        <div class="invoice-desc-head clearfix">
-                                                            <div class="invoice-sub">Description</div>
-                                                            <div class="invoice-rate">Rate</div>
-                                                            <div class="invoice-hours">Hours</div>
-                                                            <div class="invoice-subtotal">Subtotal</div>
-                                                        </div>
-                                                        <div class="invoice-desc-body">
-                                                            <ul>
-                                                                <li class="clearfix">
-                                                                    <div class="invoice-sub">Website Design</div>
-                                                                    <div class="invoice-rate">$20</div>
-                                                                    <div class="invoice-hours">100</div>
-                                                                    <div class="invoice-subtotal"><span class="weight-600">$2000</span></div>
-                                                                </li>
-                                                                <li class="clearfix">
-                                                                    <div class="invoice-sub">Logo Design</div>
-                                                                    <div class="invoice-rate">$20</div>
-                                                                    <div class="invoice-hours">100</div>
-                                                                    <div class="invoice-subtotal"><span class="weight-600">$2000</span></div>
-                                                                </li>
-                                                                <li class="clearfix">
-                                                                    <div class="invoice-sub">Website Design</div>
-                                                                    <div class="invoice-rate">$20</div>
-                                                                    <div class="invoice-hours">100</div>
-                                                                    <div class="invoice-subtotal"><span class="weight-600">$2000</span></div>
-                                                                </li>
-                                                                <li class="clearfix">
-                                                                    <div class="invoice-sub">Logo Design</div>
-                                                                    <div class="invoice-rate">$20</div>
-                                                                    <div class="invoice-hours">100</div>
-                                                                    <div class="invoice-subtotal"><span class="weight-600">$2000</span></div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="invoice-desc-footer">
-                                                            <div class="invoice-desc-head clearfix">
-                                                                <div class="invoice-sub">Bank Info</div>
-                                                                <div class="invoice-rate">Due By</div>
-                                                                <div class="invoice-subtotal">Total Due</div>
-                                                            </div>
-                                                            <div class="invoice-desc-body">
-                                                                <ul>
-                                                                    <li class="clearfix">
-                                                                        <div class="invoice-sub">
-                                                                            <p class="font-14 mb-5">Account No: <strong class="weight-600">123 456
-                                                                                    789</strong></p>
-                                                                            <p class="font-14 mb-5">Code: <strong class="weight-600">4556</strong>
-                                                                            </p>
-                                                                        </div>
-                                                                        <div class="invoice-rate font-20 weight-600">10 Jan 2018</div>
-                                                                        <div class="invoice-subtotal"><span class="weight-600 font-24 text-danger">$8000</span>
-                                                                        </div>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <h4 class="text-center pb-20">Thank You!!</h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler
-                                            </button>
-                                            <button type="button" class="btn btn-primary">Valider</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                    @endif
 
-                            <tr>
-                                <td class="table-plus">Andrea J. Cagle</td>
-                                <td>20</td>
-                                <td>Gemini</td>
-                                <td>2829 Trainer Avenue Peoria, IL 61602</td>
-                                <td>29-03-2018</td>
-                                <td>
-                                    <div class="dropdown">
-                                        <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                           href="#" role="button" data-toggle="dropdown">
-                                            <i class="dw dw-more"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                            <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-                                            <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-                                            <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-                                        </div>
-                                    </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <td class="table-plus">Andrea J. Cagle</td>
-                                <td>30</td>
-                                <td>Sagittarius</td>
-                                <td>1280 Prospect Valley Road Long Beach, CA 90802</td>
-                                <td>29-03-2018</td>
-                                <td>
-                                    <div class="dropdown">
-                                        <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                           href="#" role="button" data-toggle="dropdown">
-                                            <i class="dw dw-more"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                            <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-                                            <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-                                            <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="table-plus">Andrea J. Cagle</td>
-                                <td>25</td>
-                                <td>Gemini</td>
-                                <td>2829 Trainer Avenue Peoria, IL 61602</td>
-                                <td>29-03-2018</td>
-                                <td>
-                                    <div class="dropdown">
-                                        <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                           href="#" role="button" data-toggle="dropdown">
-                                            <i class="dw dw-more"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                            <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-                                            <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-                                            <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="table-plus">Andrea J. Cagle</td>
-                                <td>20</td>
-                                <td>Sagittarius</td>
-                                <td>1280 Prospect Valley Road Long Beach, CA 90802</td>
-                                <td>29-03-2018</td>
-                                <td>
-                                    <div class="dropdown">
-                                        <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                           href="#" role="button" data-toggle="dropdown">
-                                            <i class="dw dw-more"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                            <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-                                            <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-                                            <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="table-plus">Andrea J. Cagle</td>
-                                <td>18</td>
-                                <td>Gemini</td>
-                                <td>1280 Prospect Valley Road Long Beach, CA 90802</td>
-                                <td>29-03-2018</td>
-                                <td>
-                                    <div class="dropdown">
-                                        <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                           href="#" role="button" data-toggle="dropdown">
-                                            <i class="dw dw-more"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                            <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-                                            <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-                                            <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="table-plus">Andrea J. Cagle</td>
-                                <td>30</td>
-                                <td>Sagittarius</td>
-                                <td>1280 Prospect Valley Road Long Beach, CA 90802</td>
-                                <td>29-03-2018</td>
-                                <td>
-                                    <div class="dropdown">
-                                        <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                           href="#" role="button" data-toggle="dropdown">
-                                            <i class="dw dw-more"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                            <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-                                            <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-                                            <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="table-plus">Andrea J. Cagle</td>
-                                <td>30</td>
-                                <td>Sagittarius</td>
-                                <td>1280 Prospect Valley Road Long Beach, CA 90802</td>
-                                <td>29-03-2018</td>
-                                <td>
-                                    <div class="dropdown">
-                                        <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                           href="#" role="button" data-toggle="dropdown">
-                                            <i class="dw dw-more"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                            <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-                                            <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-                                            <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="table-plus">Andrea J. Cagle</td>
-                                <td>30</td>
-                                <td>Gemini</td>
-                                <td>1280 Prospect Valley Road Long Beach, CA 90802</td>
-                                <td>29-03-2018</td>
-                                <td>
-                                    <div class="dropdown">
-                                        <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                           href="#" role="button" data-toggle="dropdown">
-                                            <i class="dw dw-more"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                            <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-                                            <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-                                            <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="table-plus">Andrea J. Cagle</td>
-                                <td>30</td>
-                                <td>Gemini</td>
-                                <td>1280 Prospect Valley Road Long Beach, CA 90802</td>
-                                <td>29-03-2018</td>
-                                <td>
-                                    <div class="dropdown">
-                                        <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                           href="#" role="button" data-toggle="dropdown">
-                                            <i class="dw dw-more"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                            <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-                                            <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-                                            <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="table-plus">Andrea J. Cagle</td>
-                                <td>30</td>
-                                <td>Gemini</td>
-                                <td>1280 Prospect Valley Road Long Beach, CA 90802</td>
-                                <td>29-03-2018</td>
-                                <td>
-                                    <div class="dropdown">
-                                        <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                           href="#" role="button" data-toggle="dropdown">
-                                            <i class="dw dw-more"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                            <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-                                            <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-                                            <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                        @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
+
+            <!--<div class="modal fade" id="validCmd" tabindex="-1" role="dialog"
+                 aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            </div>-->
+
+            <div class="modal fade Medium-modal" id="viewModal" tabindex="-1" role="dialog"
+                 aria-labelledby="myLargeModalLabel"
+                 aria-hidden="true">
+            </div>
+
+
+            <div class="modal fade" id="annulCmd" tabindex="-1" role="dialog"
+                 aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            </div>
+
+            <script type="text/javascript">
+
+                function viewOrderModal(monProd, entId, idCmd, entLib, img, design, typeCmd, qte, prix, etat) {
+
+                    var state = "";
+
+                    if (etat == 0) {
+                        state = "EN ATTENTE";
+                    } else if (etat == 1) {
+                        state = "VALIDEE";
+                    } else {
+                        state = "ANNULEE"
+                    }
+
+                    var viewOrder = '<div class="modal-dialog modal-dialog-centered">\n' +
+                        '                                    <div class="modal-content">\n' +
+                        '                                        <div class="modal-header">\n' +
+                        '                                            <h4 class="modal-title" id="myLargeModalLabel">Tu visualises la commande <b>#' + idCmd + '</b></h4>\n' +
+                        '                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">\n' +
+                        '                                                ×\n' +
+                        '                                            </button>\n' +
+                        '                                        </div>\n' +
+                        '                                        <div class="modal-body">\n' +
+                        '                                            <div class="row">\n' +
+                        '                <div class="col-md-6">Entrepot: ' + entLib + '</div>\n' +
+                        '                <div class="col-md-6">\n' +
+                        '                    <h3> ' + design + '</h3>\n' +
+                        '                    <br>\n' +
+                        '                    <img width="100" height="100"\n' +
+                        '                         src=" storage/' + img + '"\n' +
+                        '                         class="img-fluid" alt="">\n' +
+                        '                </div>\n' +
+                        '            </div>\n' +
+                        '            <div class="row">\n' +
+                        '                <div class="col-md-3">Type: ' + typeCmd + '</div>\n' +
+                        '                <div class="col-md-3">Qte: ' + qte + '</div>\n' +
+                        '                <div class="col-md-3">Total: ' + prix + ' frcfa</div>\n' +
+                        '                <div class="col-md-3">Etat: ' + state + '</div>\n' +
+                        '            </div>\n' +
+                        '            <div class="row">\n' +
+                        '                <div class="col-md-12">\n' +
+                        '                    \n' +
+                        '                </div>\n' +
+                        '            </div>' +
+                        '                                        </div>\n' +
+                        '                                        <div class="modal-footer">\n' +
+                        '                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer\n' +
+                        '                                            </button>\n' +
+                        '                    <button onclick="modqlFunctionForCancelling(' + idCmd + ',' + entId  + ',' + monProd + ',' + qte +')" class="btn btn-danger" type="button"><i\n' +
+                        '                            class="fa fa-trash-o"></i>\n' +
+                        '                    </button>\n' +
+                        '                    <button type="button" onclick="modalFunctionForValidation(' + idCmd + ',' + entId  + ',' + monProd + ',' + qte +')" class="btn btn-primary"><i class="fa fa-check-circle"></i></button>\n' +
+                        '                </div>\n' +
+                        '            </div>\n' +
+                        '        </div>';
+
+                    document.getElementById('viewModal').innerHTML = viewOrder;
+
+                }
+
+                function modqlFunctionForCancelling(idCmd, entId, prodId, qteCmd) {
+
+                    validation = confirm('Tu es sur le point d\'annuler la commande #' + idCmd + ' prodId: ' + prodId);
+
+                    if (validation) {
+
+                        //alert('/Approuver-commandes/' + idCmd + '/cancel/' + entId + '/' + qteCmd + '/' + prodId);
+                        window.location.href = '/Approuver-commandes/' + idCmd + '/cancel/' + entId + '/' + qteCmd + '-' + prodId;
+                    }
+                }
+
+                function modalFunctionForValidation(idCmd, entId, prodId, qteCmd) {
+
+                    validation = confirm('Tu es sur le point de valider la commande #' + idCmd + ' prodId: ' + prodId);
+
+                    if (validation) {
+
+                        //alert('/Approuver-commandes/' + idCmd + '/appr/' + entId + '/' + qteCmd + '/' + prodId);
+                        window.location.href = '/Approuver-commandes/' + idCmd + '/appr/' + entId + '/' + qteCmd + '-' + prodId;
+                    }
+                }
+
+            </script>
             <div class="footer-wrap pd-20 mb-20 card-box">
                 DeskApp - Bootstrap 4 Admin Template By <a href="https://github.com/dropways" target="_blank">Ankit
                     Hingarajiya</a>
