@@ -23,6 +23,17 @@
     <link rel="stylesheet" href="{{ asset('css/rangeslider.css') }}">
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+    {{-- script for map --}}
+    <link href="{{ asset('assets/src/map/mapbox-gl.css') }}" rel="stylesheet">
+    <script src="{{ asset('assets/src/map/mapbox-gl.js') }}"></script>
+    {{-- <link href="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js"></script> --}}
+
+    <style>
+        body { margin: 0; padding: 0; }
+        #myMap { position: absolute; top: 0; bottom: 0; width: 100%; height: 550px; }
+    </style>
 </head>
 <body>
 
@@ -44,7 +55,7 @@
             <div class="row align-items-center">
 
                 <div class="col-11 col-xl-2">
-                    <h1 class="mb-0 site-logo"><a href="index.html" class="text-white h2 mb-0">Browse</a></h1>
+                    <h1 class="mb-0 site-logo"><a href="{{ __('/') }}" class="text-white h2 mb-0">monFoyer</a></h1>
                 </div>
                 <div class="col-12 col-md-10 d-none d-xl-block">
                     <nav class="site-navigation position-relative text-right" role="navigation">

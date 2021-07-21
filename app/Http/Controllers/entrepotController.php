@@ -107,7 +107,7 @@ class entrepotController extends Controller
         $approTable = DB::select("SELECT *
         FROM entrepots e, approvisionners a, produits pr, marques m
         WHERE e.entId = a.entId AND a.prodId = pr.prodId AND pr.marqId = m.marqId AND e.entId = $entId
-        
+
         ");
 
         //traitement sur les jours et heures d'ouverture
@@ -136,7 +136,7 @@ class entrepotController extends Controller
         $prodsForEnt = DB::select("SELECT *
         FROM entrepots e, posseders p, produits pr, marques m
         WHERE e.entId = p.entId AND p.prodId = pr.prodId AND pr.marqId = m.marqId AND e.entId = $entId
-        
+
         ");
 
         return $prodsForEnt;
@@ -195,6 +195,7 @@ class entrepotController extends Controller
         $sql .= ' GROUP BY e.entLib';
 
         $searchResult = DB::select($sql);
+        $coordonateArray = $searchResult;
         $arrayEntDispo = [];
         foreach ($searchResult as $key => $result)
         {
@@ -202,7 +203,7 @@ class entrepotController extends Controller
             $arrayEntDispo[$key] = $entIsOpen;
         }
 
-        return view('listings')->with(['searchResult' => $searchResult, 'dispo' => $arrayEntDispo]);
+        return view('listings')->with(['searchResult' => $searchResult, 'dispo' => $arrayEntDispo, 'geoLocData' => $coordonateArray]);
     }
 
     private function checkIfEntIsOpen($day, $hour)
@@ -270,7 +271,8 @@ class entrepotController extends Controller
         $entInfo = DB::select($query);
         $dataArray = [
             'entInfo' => $entInfo,
-            'produits' => $this->returnEntProd($entId)
+            'produits' => $this->returnEntProd($entId),
+            'geoLocData' => $entInfo
         ];
 
         //dd($entInfo);

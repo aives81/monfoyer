@@ -34,35 +34,45 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
-                    <p><img src="images/mapBox.png" alt="Image" class="img-fluid mb-4"></p>
-                    @foreach($searchResult as $key => $result)
-                        <div class="d-block d-md-flex listing-horizontal">
+                    @if (count($searchResult) == 0)
 
-                            <a href="{{ __('/Nos-fournisseurs/') . $result->entId . "/" . $result->entSlug }}" class="img d-block"
-                               style="background-image: url('storage/{{ $result->entImg }}')">
-                                @if($dispo[$key] == "ouvert")
-                                    <span class="category">O U V E R T</span>
-                                    @elseif($dispo[$key] == "ferme")
-                                    <span class="category bg-danger">F E R M E</span>
-                                @endif
-                            </a>
-
-                            <div class="lh-content">
-                                <a href="{{ __('/Nos-fournisseurs/') . $result->entId . "/" . $result->entSlug }}" class="bookmark"><span
-                                        class="icon-arrow-right"></span></a>
-                                <h3><a href="{{ __('/Nos-fournisseurs/') . $result->entId . "/" . $result->entSlug }}">{{ $result->entLib }}</a></h3>
-                                <p>{{ $result->comLib . ", " . $result->entDescripPlace }}</p>
-                                <p>
-                                    <span class="icon-star text-warning"></span>
-                                    <span class="icon-star text-warning"></span>
-                                    <span class="icon-star text-warning"></span>
-                                    <span class="icon-star text-warning"></span>
-                                    <span class="icon-star text-secondary"></span>
-                                    <span>(492 Reviews)</span>
-                                </p>
-                            </div>
+                        <div class="alert alert-info">
+                            <i class="icon icon-info-circle"></i> Aucun resultat pour cette recherche
                         </div>
-                    @endforeach
+
+                        @else
+
+                        <!--Geoloc here-->
+                        @include('viewsLayout.geolocSection', $geoLocData)
+
+                            @foreach($searchResult as $key => $result)
+                                <div class="d-block d-md-flex listing-horizontal">
+
+                                    <a href="{{ __('/Nos-fournisseurs/') . $result->entId . "/" . $result->entSlug }}" class="img d-block"
+                                    style="background-image: url('storage/{{ $result->entImg }}')">
+                                        @if($dispo[$key] == "ouvert")
+                                            <span class="category">O U V E R T</span>
+                                            @elseif($dispo[$key] == "ferme")
+                                            <span class="category bg-danger">F E R M E</span>
+                                        @endif
+                                    </a>
+
+                                    <div class="lh-content">
+                                        <a href="{{ __('/Nos-fournisseurs/') . $result->entId . "/" . $result->entSlug }}" class="bookmark"><span
+                                                class="icon-arrow-right"></span></a>
+                                        <h3><a href="{{ __('/Nos-fournisseurs/') . $result->entId . "/" . $result->entSlug }}">{{ $result->entLib }}</a></h3>
+                                        <p>{{ $result->comLib . ", " . $result->entDescripPlace }}</p>
+                                        <p>
+                                            <span class="icon-star text-warning"></span>
+                                            <span class="icon-star text-warning"></span>
+                                            <span class="icon-star text-warning"></span>
+                                            <span class="icon-star text-warning"></span>
+                                            <span class="icon-star text-secondary"></span>
+                                            <span>(492 Reviews)</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            @endforeach
 
                     <div class="col-12 mt-5 text-center">
                         <div class="custom-pagination">
@@ -179,6 +189,8 @@
                     </div>
 
                 </div>
+
+                @endif
 
             </div>
         </div>
