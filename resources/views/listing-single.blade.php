@@ -332,41 +332,41 @@
                 </div>
 
                 <!--<div class="mb-5">
-                            <form action="#" method="post">
-                                <div class="form-group">
-                                    <p>Category 'Restaurant' is selected</p>
-                                    <p>More filters</p>
-                                </div>
-                                <div class="form-group">
-                                    <ul class="list-unstyled">
-                                        <li>
-                                            <label for="option1">
-                                                <input type="checkbox" id="option1">
-                                                Coffee
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label for="option2">
-                                                <input type="checkbox" id="option2">
-                                                Vegetarian
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label for="option3">
-                                                <input type="checkbox" id="option3">
-                                                Vegan Foods
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label for="option4">
-                                                <input type="checkbox" id="option4">
-                                                Sea Foods
-                                            </label>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </form>
-                        </div>-->
+                    <form action="#" method="post">
+                        <div class="form-group">
+                            <p>Category 'Restaurant' is selected</p>
+                            <p>More filters</p>
+                        </div>
+                        <div class="form-group">
+                            <ul class="list-unstyled">
+                                <li>
+                                    <label for="option1">
+                                        <input type="checkbox" id="option1">
+                                        Coffee
+                                    </label>
+                                </li>
+                                <li>
+                                    <label for="option2">
+                                        <input type="checkbox" id="option2">
+                                        Vegetarian
+                                    </label>
+                                </li>
+                                <li>
+                                    <label for="option3">
+                                        <input type="checkbox" id="option3">
+                                        Vegan Foods
+                                    </label>
+                                </li>
+                                <li>
+                                    <label for="option4">
+                                        <input type="checkbox" id="option4">
+                                        Sea Foods
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>-->
 
             </div>
 
